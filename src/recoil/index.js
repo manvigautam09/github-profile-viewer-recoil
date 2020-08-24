@@ -2,6 +2,11 @@ import { atom, selector } from "recoil";
 
 import { GITHUB_USER_DETAILS } from "../utils/constants";
 
+export const localUser = atom({
+  key: "localUser",
+  default: "manvisharma09",
+});
+
 export const githubUser = atom({
   key: "githubUser",
   default: "manvisharma09",

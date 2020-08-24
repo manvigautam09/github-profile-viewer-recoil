@@ -13,7 +13,9 @@ const DashBoardContainer = styled.div`
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 20px;
+  margin-bottom: 0;
 `;
 
 const ProfileDashboard = () => {
