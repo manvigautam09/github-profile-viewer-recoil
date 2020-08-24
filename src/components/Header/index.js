@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useRecoilState } from "recoil";
-import { githubUser } from "../../recoil/index";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import * as colors from "../../utils/colorConstants";
+import { githubUser, localUser } from "../../recoil/index";
 
 const HeaderContainer = styled.div`
   background-color: ${colors.HEADER_COLOR};
@@ -18,17 +18,21 @@ const HeaderInput = styled.input`
   color: white;
 `;
 
+const StyledButton = styled.button``;
+
 const Header = () => {
-  const [userToFetch, setUserToFetch] = useRecoilState(githubUser);
+  const [user, setUser] = useRecoilState(localUser);
+  const setUserToFetch = useSetRecoilState(githubUser);
 
   return (
     <HeaderContainer>
       <HeaderInput
         type="text"
         placeholder="Search"
-        value={userToFetch}
-        onChange={(event) => setUserToFetch(event.target.value)}
+        value={user}
+        onChange={(event) => setUser(event.target.value)}
       />
+      <StyledButton onClick={() => setUserToFetch(user)}>Search</StyledButton>
     </HeaderContainer>
   );
 };
