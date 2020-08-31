@@ -6,7 +6,7 @@ import ProfileDashboard from "./ProfileDashboard";
 const Routes = () => {
   return (
     <Router>
-      <Route path="/profile" component={ProfileDashboard} />
+      <Route path="/" component={ProfileDashboard} />
     </Router>
   );
 };
