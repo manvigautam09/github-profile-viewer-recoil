@@ -27,3 +27,18 @@ export const getUserRepos = selector({
     return res.json();
   },
 });
+
+export const repoFilterState = atom({
+  key: "repoFilterState",
+  default: "",
+});
+
+export const getFilteredRepos = selector({
+  key: "getFilteredRepos",
+  get: ({ get }) =>
+    get(repoFilterState).length
+      ? get(getUserRepos).filter(
+          (item) => item.name.search(get(repoFilterState).toLowerCase()) !== -1
+        )
+      : get(getUserRepos),
+});
