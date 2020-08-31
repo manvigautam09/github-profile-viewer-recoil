@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useRecoilState, useSetRecoilState } from "recoil";
 import * as colors from "../../utils/colorConstants";
-import { githubUser, localUser } from "../../recoil/index";
+import { githubUser, localUser, repoFilterState } from "../../recoil/index";
 
 const HeaderContainer = styled.div`
   background-color: ${colors.HEADER_COLOR};
@@ -23,6 +23,7 @@ const StyledButton = styled.button``;
 const Header = () => {
   const [user, setUser] = useRecoilState(localUser);
   const setUserToFetch = useSetRecoilState(githubUser);
+  const setRepoFilterState = useSetRecoilState(repoFilterState);
 
   return (
     <HeaderContainer>
@@ -32,7 +33,14 @@ const Header = () => {
         value={user}
         onChange={(event) => setUser(event.target.value)}
       />
-      <StyledButton onClick={() => setUserToFetch(user)}>Search</StyledButton>
+      <StyledButton
+        onClick={() => {
+          setUserToFetch(user);
+          setRepoFilterState("");
+        }}
+      >
+        Search
+      </StyledButton>
     </HeaderContainer>
   );
 };
