@@ -7,7 +7,6 @@ import { githubUser, localUser, repoFilterState } from "../../recoil/index";
 
 const HeaderContainer = styled.div`
   background-color: ${colors.HEADER_COLOR};
-  width: 100%;
   padding: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -34,6 +33,7 @@ const Header = () => {
         onChange={(event) => setUser(event.target.value)}
       />
       <StyledButton
+        disabled={!user.length}
         onClick={() => {
           setUserToFetch(user);
           setRepoFilterState("");

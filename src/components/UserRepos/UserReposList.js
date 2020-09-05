@@ -12,9 +12,7 @@ import {
 import { getUserRepos } from "../../recoil";
 
 const RepoContainer = styled.div`
-  width: 50vw;
-  padding-left: 40px;
-  padding-bottom: 20px;
+  width: 60%;
 `;
 
 const RepoDiv = styled.div`
@@ -40,7 +38,11 @@ const RepoDescription = styled.div`
 
 const FilterBox = styled.div`
   display: flex;
-  width: 100%;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const StyledInput = styled.input`
