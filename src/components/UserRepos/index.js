@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
 
+import Spinner from "../shared/Spinner";
 import UserReposList from "./UserReposList";
 
 const UserRepos = () => {
   return (
-    <Suspense fallback={<h3>Loading Repos...</h3>}>
+    <Suspense fallback={<Spinner />}>
       <UserReposList />
     </Suspense>
   );

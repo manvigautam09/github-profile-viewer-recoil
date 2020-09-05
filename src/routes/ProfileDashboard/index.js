@@ -13,8 +13,8 @@ const DashBoardContainer = styled.div`
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   margin-top: 20px;
+  justify-content: space-around;
 
   @media only screen and (max-width: 700px) {
     flex-direction: column;
