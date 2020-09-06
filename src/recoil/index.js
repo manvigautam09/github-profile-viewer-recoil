@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 
-import { GITHUB_USER_DETAILS } from "../utils/constants";
+import { getUserDetailsRepos } from "../services/userService";
 
 export const localUser = atom({
   key: "localUser",
@@ -15,16 +15,16 @@ export const githubUser = atom({
 export const userDetails = selector({
   key: "userDetails",
   get: async ({ get }) => {
-    const res = await fetch(`${GITHUB_USER_DETAILS}/${get(githubUser)}`);
-    return res.json();
+    const res = await getUserDetailsRepos(`/${get(githubUser)}`);
+    return res;
   },
 });
 
 export const getUserRepos = selector({
   key: "userRepos",
   get: async ({ get }) => {
-    const res = await fetch(`${GITHUB_USER_DETAILS}/${get(githubUser)}/repos`);
-    return res.json();
+    const res = await getUserDetailsRepos(`/${get(githubUser)}/repos`);
+    return res;
   },
 });
 
@@ -41,39 +41,49 @@ export const selectedLanguages = atom({
 export const getFilteredReposandLanguges = selector({
   key: "getFilteredRepos",
   get: ({ get }) => {
-    if (get(repoFilterState).length || get(selectedLanguages).length) {
-      let filteredByName = get(getUserRepos).filter(
-        (item) =>
-          item.name.toLowerCase().search(get(repoFilterState).toLowerCase()) !==
-          -1
-      );
-
-      if (get(selectedLanguages).length) {
-        filteredByName = filteredByName.filter(
-          (item) => get(selectedLanguages).indexOf(item.language) !== -1
-        );
-      }
-
+    if (get(getUserRepos) === "User  Not found") {
       return {
-        repos: filteredByName,
-        languages: [
-          ...new Set(
-            get(getUserRepos)
-              .filter(
-                (item) =>
-                  item.name
-                    .toLowerCase()
-                    .search(get(repoFilterState).toLowerCase()) !== -1
-              )
-              .map((item) => item.language)
-          ),
-        ],
+        repos: [],
+        languages: [],
       };
     } else {
-      return {
-        repos: get(getUserRepos),
-        languages: [...new Set(get(getUserRepos).map((item) => item.language))],
-      };
+      if (get(repoFilterState).length || get(selectedLanguages).length) {
+        let filteredByName = get(getUserRepos).filter(
+          (item) =>
+            item.name
+              .toLowerCase()
+              .search(get(repoFilterState).toLowerCase()) !== -1
+        );
+
+        if (get(selectedLanguages).length) {
+          filteredByName = filteredByName.filter(
+            (item) => get(selectedLanguages).indexOf(item.language) !== -1
+          );
+        }
+
+        return {
+          repos: filteredByName,
+          languages: [
+            ...new Set(
+              get(getUserRepos)
+                .filter(
+                  (item) =>
+                    item.name
+                      .toLowerCase()
+                      .search(get(repoFilterState).toLowerCase()) !== -1
+                )
+                .map((item) => item.language)
+            ),
+          ],
+        };
+      } else {
+        return {
+          repos: get(getUserRepos),
+          languages: [
+            ...new Set(get(getUserRepos).map((item) => item.language)),
+          ],
+        };
+      }
     }
   },
 });

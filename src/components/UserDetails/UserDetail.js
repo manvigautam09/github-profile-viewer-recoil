@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
-import { userDetails } from "../../recoil";
+import { userDetails, localUser } from "../../recoil";
 import blogIcon from "../../assets/icons/blog.svg";
 import companyIcon from "../../assets/icons/company.svg";
 import twitterIcon from "../../assets/icons/twitter.svg";
@@ -56,7 +56,13 @@ const StyledImage = styled.img`
 `;
 
 const UserDetail = () => {
+  const searchedFor = useRecoilValue(localUser);
   const details = useRecoilValue(userDetails);
+
+  if (details === "User  Not found") {
+    return <h1>{searchedFor} not a valid github username</h1>;
+  }
+
   const {
     avatar_url,
     name,
