@@ -68,6 +68,10 @@ const UserReposList = () => {
   const filteredRepos = useRecoilValue(getFilteredReposandLanguges);
   const [repoFilter, setRepoFilter] = useRecoilState(repoFilterState);
 
+  if (repos === "User  Not found" || details === "User  Not found") {
+    return <div />;
+  }
+
   return (
     <RepoContainer>
       <h1>
