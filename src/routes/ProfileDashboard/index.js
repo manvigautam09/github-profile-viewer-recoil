@@ -13,9 +13,13 @@ const DashBoardContainer = styled.div`
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: 20px;
-  margin-bottom: 0;
+  margin-top: 20px;
+  justify-content: space-around;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ProfileDashboard = () => {

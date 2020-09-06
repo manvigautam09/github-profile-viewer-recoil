@@ -4,9 +4,14 @@ import { useRecoilValue } from "recoil";
 
 import { userDetails } from "../../recoil";
 
+const UserDetailContainer = styled.div`
+  width: 30%;
+  min-width: 252px;
+`;
+
 const AvatarProfile = styled.img`
   width: 250px;
-  height: 300px;
+  height: 250px;
   border-radius: 50%;
 `;
 
@@ -42,7 +47,7 @@ const UserDetail = () => {
   } = details;
 
   return (
-    <div>
+    <UserDetailContainer>
       <AvatarProfile src={`${avatar_url}`} alt={`profile_${name}`} />
       <StyledText>{name}</StyledText>
       <div>{login}</div>
@@ -54,7 +59,7 @@ const UserDetail = () => {
       <div>{location}</div>
       <div>{blog}</div>
       <div>{twitter_username}</div>
-    </div>
+    </UserDetailContainer>
   );
 };
 

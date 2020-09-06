@@ -7,7 +7,6 @@ import { githubUser, localUser, repoFilterState } from "../../recoil/index";
 
 const HeaderContainer = styled.div`
   background-color: ${colors.HEADER_COLOR};
-  width: 100%;
   padding: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -31,9 +30,18 @@ const Header = () => {
         type="text"
         placeholder="Search"
         value={user}
-        onChange={(event) => setUser(event.target.value)}
+        onChange={(event) => {
+          setUser(event.target.value);
+        }}
+        onKeyPress={(event) => {
+          if (event.keyCode || event.which === 13) {
+            setUserToFetch(user);
+            setRepoFilterState("");
+          }
+        }}
       />
       <StyledButton
+        disabled={!user.length}
         onClick={() => {
           setUserToFetch(user);
           setRepoFilterState("");

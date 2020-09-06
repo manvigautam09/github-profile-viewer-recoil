@@ -33,12 +33,47 @@ export const repoFilterState = atom({
   default: "",
 });
 
-export const getFilteredRepos = selector({
+export const selectedLanguages = atom({
+  key: "selectedLanguages",
+  default: [],
+});
+
+export const getFilteredReposandLanguges = selector({
   key: "getFilteredRepos",
-  get: ({ get }) =>
-    get(repoFilterState).length
-      ? get(getUserRepos).filter(
-          (item) => item.name.search(get(repoFilterState).toLowerCase()) !== -1
-        )
-      : get(getUserRepos),
+  get: ({ get }) => {
+    if (get(repoFilterState).length || get(selectedLanguages).length) {
+      let filteredByName = get(getUserRepos).filter(
+        (item) =>
+          item.name.toLowerCase().search(get(repoFilterState).toLowerCase()) !==
+          -1
+      );
+
+      if (get(selectedLanguages).length) {
+        filteredByName = filteredByName.filter(
+          (item) => get(selectedLanguages).indexOf(item.language) !== -1
+        );
+      }
+
+      return {
+        repos: filteredByName,
+        languages: [
+          ...new Set(
+            get(getUserRepos)
+              .filter(
+                (item) =>
+                  item.name
+                    .toLowerCase()
+                    .search(get(repoFilterState).toLowerCase()) !== -1
+              )
+              .map((item) => item.language)
+          ),
+        ],
+      };
+    } else {
+      return {
+        repos: get(getUserRepos),
+        languages: [...new Set(get(getUserRepos).map((item) => item.language))],
+      };
+    }
+  },
 });
