@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import fetch from "node-fetch";
 import _ from "lodash";
 import { isNilOrEmpty } from "../utils/helper";
+import { GITHUB_USER_DETAILS } from "../utils/constants";
 
 const blobContentType = [
   "application/*",
@@ -99,8 +100,8 @@ const responseHandler = async (response, resolve, reject) => {
 };
 
 function getBaseApiEndPoint() {
-  if (process.env.REACT_APP_GITHUB_USER_DETAILS) {
-    return process.env.REACT_APP_GITHUB_USER_DETAILS;
+  if (GITHUB_USER_DETAILS) {
+    return GITHUB_USER_DETAILS;
   }
 
   return "";
