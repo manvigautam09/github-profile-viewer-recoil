@@ -7,6 +7,7 @@ import RepoFilterByType from "../RepoFilterByType";
 import {
   REPOS_BORDER_COLOR,
   REPO_TEXT_COLOR,
+  FILTER_BACKGROUND,
   REPO_DESCRIPTION_COLOR,
 } from "../../utils/colorConstants";
 import { GITHUB_LINK } from "../../utils/constants";
@@ -35,6 +36,7 @@ const RepoName = styled.a`
   color: ${REPO_TEXT_COLOR};
   font-size: 20px;
   font-weight: 900;
+  text-decoration: none;
 `;
 
 const RepoDescription = styled.div`
@@ -44,6 +46,7 @@ const RepoDescription = styled.div`
 const FilterBox = styled.div`
   display: flex;
   margin-top: 20px;
+  align-items: center;
 
   @media only screen and (max-width: 700px) {
     flex-direction: column;
@@ -53,6 +56,10 @@ const FilterBox = styled.div`
 
 const StyledInput = styled.input`
   margin-left: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  border: solid 1px ${FILTER_BACKGROUND};
+  outline: none;
 `;
 
 const UserReposList = () => {
