@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
 import { userDetails } from "../../recoil";
+import followersFollowingIcon from "../../assets/icons/followersFollowingIcon.svg";
 
 const UserDetailContainer = styled.div`
   width: 30%;
@@ -31,6 +32,8 @@ const FollowersFollowing = styled.span`
   font-family: "Times New Roman", Times, serif;
 `;
 
+const StyledImage = styled.img``;
+
 const UserDetail = () => {
   const details = useRecoilValue(userDetails);
   const {
@@ -53,6 +56,7 @@ const UserDetail = () => {
       <div>{login}</div>
       <LinkToBio>{bio}</LinkToBio>
       <FollowersFollowing>
+        <img src={followersFollowingIcon} alt="followersFollowingIcon" />
         <b>{followers}</b> followers · <b>{following}</b> following
       </FollowersFollowing>
       <div>{company}</div>
