@@ -33,12 +33,47 @@ export const repoFilterState = atom({
   default: "",
 });
 
-export const getFilteredRepos = selector({
+// export const getFilteredRepos = selector({
+//   key: "getFilteredRepos",
+//   get: ({ get }) =>
+//     get(repoFilterState).length
+//       ? get(getUserRepos).filter(
+//           (item) => item.name.search(get(repoFilterState).toLowerCase()) !== -1
+//         )
+//       : get(getUserRepos),
+// });
+
+// export const getFilteredRepoLanguages = selector({
+//   key: "getFilteredRepoLanguages",
+//   get: ({ get }) => {
+//     return [...new Set(get(getUserRepos).map((item) => item.language))];
+//   },
+// });
+
+export const getFilteredReposandLanguges = selector({
   key: "getFilteredRepos",
   get: ({ get }) =>
     get(repoFilterState).length
-      ? get(getUserRepos).filter(
-          (item) => item.name.search(get(repoFilterState).toLowerCase()) !== -1
-        )
-      : get(getUserRepos),
+      ? {
+          repos: get(getUserRepos).filter(
+            (item) =>
+              item.name.search(get(repoFilterState).toLowerCase()) !== -1
+          ),
+          languages: [
+            ...new Set(
+              get(getUserRepos)
+                .filter(
+                  (item) =>
+                    item.name.search(get(repoFilterState).toLowerCase()) !== -1
+                )
+                .map((item) => item.language)
+            ),
+          ],
+        }
+      : {
+          repos: get(getUserRepos),
+          languages: [
+            ...new Set(get(getUserRepos).map((item) => item.language)),
+          ],
+        },
 });

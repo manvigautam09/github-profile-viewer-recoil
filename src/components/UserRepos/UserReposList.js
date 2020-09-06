@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilValue, useRecoilState } from "recoil";
 
-import { repoFilterState, getFilteredRepos } from "../../recoil";
-
+import RepoFilterByType from "../RepoFilterByType";
+import { repoFilterState, getFilteredReposandLanguges } from "../../recoil";
 import {
   REPOS_BORDER_COLOR,
   REPO_TEXT_COLOR,
@@ -51,15 +51,18 @@ const StyledInput = styled.input`
 
 const UserReposList = () => {
   const repos = useRecoilValue(getUserRepos);
-  const filteredRepos = useRecoilValue(getFilteredRepos);
+  const filteredRepos = useRecoilValue(getFilteredReposandLanguges);
   const [repoFilter, setRepoFilter] = useRecoilState(repoFilterState);
 
   return (
     <RepoContainer>
       <h1>
         Repositories
-        {filteredRepos.length > 0 ? `(${filteredRepos.length})` : ""}
+        {filteredRepos.repos.length > 0
+          ? `(${filteredRepos.repos.length})`
+          : ""}
       </h1>
+
       {repos.length && (
         <FilterBox>
           <div>Search for Repositories</div>
@@ -70,8 +73,10 @@ const UserReposList = () => {
           />
         </FilterBox>
       )}
-      {filteredRepos.length !== 0 &&
-        filteredRepos.map((item) => {
+      {filteredRepos.languages.length > 0 && <RepoFilterByType />}
+
+      {filteredRepos.repos.length !== 0 &&
+        filteredRepos.repos.map((item) => {
           const { created_at, name, description, language } = item;
           return (
             <RepoDiv key={created_at}>
