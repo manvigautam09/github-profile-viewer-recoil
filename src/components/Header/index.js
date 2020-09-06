@@ -30,7 +30,15 @@ const Header = () => {
         type="text"
         placeholder="Search"
         value={user}
-        onChange={(event) => setUser(event.target.value)}
+        onChange={(event) => {
+          setUser(event.target.value);
+        }}
+        onKeyPress={(event) => {
+          if (event.keyCode || event.which === 13) {
+            setUserToFetch(user);
+            setRepoFilterState("");
+          }
+        }}
       />
       <StyledButton
         disabled={!user.length}

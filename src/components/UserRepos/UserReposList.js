@@ -2,14 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilValue, useRecoilState } from "recoil";
 
+import { getUserRepos } from "../../recoil";
 import RepoFilterByType from "../RepoFilterByType";
-import { repoFilterState, getFilteredReposandLanguges } from "../../recoil";
 import {
   REPOS_BORDER_COLOR,
   REPO_TEXT_COLOR,
   REPO_DESCRIPTION_COLOR,
 } from "../../utils/colorConstants";
-import { getUserRepos } from "../../recoil";
+import { GITHUB_LINK } from "../../utils/constants";
+import {
+  repoFilterState,
+  getFilteredReposandLanguges,
+  userDetails,
+} from "../../recoil";
 
 const RepoContainer = styled.div`
   width: 60%;
@@ -26,7 +31,7 @@ const RepoDiv = styled.div`
   justify-content: space-between;
 `;
 
-const RepoName = styled.div`
+const RepoName = styled.a`
   color: ${REPO_TEXT_COLOR};
   font-size: 20px;
   font-weight: 900;
@@ -38,6 +43,7 @@ const RepoDescription = styled.div`
 
 const FilterBox = styled.div`
   display: flex;
+  margin-top: 20px;
 
   @media only screen and (max-width: 700px) {
     flex-direction: column;
@@ -51,6 +57,7 @@ const StyledInput = styled.input`
 
 const UserReposList = () => {
   const repos = useRecoilValue(getUserRepos);
+  const details = useRecoilValue(userDetails);
   const filteredRepos = useRecoilValue(getFilteredReposandLanguges);
   const [repoFilter, setRepoFilter] = useRecoilState(repoFilterState);
 
@@ -62,10 +69,11 @@ const UserReposList = () => {
           ? `(${filteredRepos.repos.length})`
           : ""}
       </h1>
+      <h3>Filter Repositories :</h3>
 
       {repos.length && (
         <FilterBox>
-          <div>Search for Repositories</div>
+          <div>By Name</div>
           <StyledInput
             type="text"
             value={repoFilter}
@@ -73,7 +81,13 @@ const UserReposList = () => {
           />
         </FilterBox>
       )}
-      {filteredRepos.languages.length > 0 && <RepoFilterByType />}
+
+      {filteredRepos.languages.length > 0 && (
+        <FilterBox>
+          <div>By Language</div>
+          <RepoFilterByType />
+        </FilterBox>
+      )}
 
       {filteredRepos.repos.length !== 0 &&
         filteredRepos.repos.map((item) => {
@@ -81,7 +95,12 @@ const UserReposList = () => {
           return (
             <RepoDiv key={created_at}>
               <React.Fragment>
-                <RepoName>{name}</RepoName>
+                <RepoName
+                  href={`${GITHUB_LINK}${details.login}/${name}`}
+                  target="_blank"
+                >
+                  {name}
+                </RepoName>
                 <RepoDescription>{description}</RepoDescription>
               </React.Fragment>
               <RepoDescription>{language}</RepoDescription>
